@@ -7,7 +7,7 @@ The Selenium-Proxy-Rotator project focues on optimizing the speed at which webpa
 
 The application is optimized to handle public ips that are likley to be unreliable. The algorithm assumes a failed request is associated with a dead server and that server will be removed from the set of proxies considered for requests. If the connection is guarenteed to be reliable this functionality can be bypassed by repopulating the undefined queue with that proxy. 
 
-![proxy sim gif](https://user-images.githubusercontent.com/29416921/111025357-36fa0a00-83a9-11eb-9d15-ce015d35f2e0.gif =1000x500)
+![proxy sim gif](https://user-images.githubusercontent.com/29416921/111025357-36fa0a00-83a9-11eb-9d15-ce015d35f2e0.gif)
 
 ## How is the proxy pool populated? 
 
