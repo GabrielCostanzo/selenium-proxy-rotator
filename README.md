@@ -1,13 +1,35 @@
-
-# Selenium-Proxy-Rotator
+# Proxy Rotator 
 
 ## Description 
 
-The Selenium-Proxy-Rotator project focues on optimizing the speed at which webpages requested through Selenium are returned through proxy servers. It is achieved through a rotation algorithm that prioritizes speed and will utilize the fastest server until a request fails or the average response speed becomes higher than another server. Before the optimal server is determined each server in the provided pool is given a chance to determine a basline request speed. If one of these two rotation conditions is triggered, requests will be sent to another server that is deemed the fastest.
+The proxy rotator project focues on optimizing the speed at which webpages requested through Selenium are returned through proxy servers. It is achieved through a rotation algorithm that prioritizes speed and will utilize the fastest server until a request fails or the average response speed becomes higher than another server. Before the optimal server is determined each server in the provided pool is given a chance to determine a basline request speed. If one of these two rotation conditions is triggered, requests will be sent to another server that is deemed the fastest.
 
 The application is optimized to handle public ips that are likley to be unreliable. The algorithm assumes a failed request is associated with a dead server and that server will be removed from the set of proxies considered for requests. If the connection is guarenteed to be reliable this functionality can be bypassed by repopulating the undefined queue with that proxy. 
 
-![proxy sim gif](https://user-images.githubusercontent.com/29416921/111025357-36fa0a00-83a9-11eb-9d15-ce015d35f2e0.gif)
+### A set of proxies is initialized (represented by yellow dots)
+![init_proxy](https://user-images.githubusercontent.com/29416921/111508571-d7d62580-8719-11eb-82b4-9ccc1f9f055a.gif)
+### A proxy is sent requests (proxy currently being sent requests is represented in purple, response time of animation matches actual)
+![first_active](https://user-images.githubusercontent.com/29416921/111506956-297db080-8718-11eb-9b29-9c523708faf7.gif)
+### The remaining proxies are sent requests in a round robin (previous valid proxy added to the heap, blue dot gray animation)
+#### a) Proxies that fail to respond are removed (represented by red dots)
+![remove](https://user-images.githubusercontent.com/29416921/111506966-2be00a80-8718-11eb-8c10-045f6ab6a0cb.gif)
+#### b) Proxies that are valid get added to the heap (represented by blue dots with gray request animation)
+![test_alive](https://user-images.githubusercontent.com/29416921/111506996-34384580-8718-11eb-9971-4e88e5e0b6aa.gif)
+### After all proxies have been tested, the fastest is given requests. This rotates if the speed falls below another proxy or a request fails.
+![optimize](https://user-images.githubusercontent.com/29416921/111506974-2edafb00-8718-11eb-8726-7d23fb86a2d4.gif)
+
+## Usage
+
+|parameter |data type | description |
+|----------|----------|-------------|
+|local_preferred (optional)|boolean|If set to True, the local ip is prioritized and the proxies are only accessed after a request to the local ip fails. If set to False, requests only go to proxies and the local ip is not considered.|
+
+```python
+proxy_rotator = proxy_manager(local_preferred = True)
+proxy_rotator = proxy_manager()
+
+proxy_rotator.get_webpage(url)
+```
 
 ## How is the proxy pool populated? 
 
@@ -18,8 +40,8 @@ This dataset is updated frequently and provides a consistent pool for the applic
 
 Future iterations of the application intend on implementing additional functions to target other public ips and to allow user provided ips.
 
-The population process is run everytime the existing set of active proxy servers is empty.
-Future optimizations intend to implement a threshold value to attempt to provide new proxies when active servers exist but may have poor preformance. 
+The population process is run everytime the existing set of alive proxy servers is empty.
+Future optimizations intend to implement a threshold value to attempt to provide new proxies when alive servers exist but may have poor preformance. 
 
 
 ## Primary Components of the proxy manager
@@ -57,7 +79,7 @@ A min heap data structure. For each request directed at the proxy heap the activ
 
 
 
-## Rotation conditions
+## Rotation Conditions
 1. A webpage request fails
 
 2. The updated average request time increases to a degree that causes a different ip to be the fastest
@@ -65,7 +87,7 @@ A min heap data structure. For each request directed at the proxy heap the activ
 ## Algorithm
 
 ```
-if no active ips
+if no alive ips
 	if undefined proxy pool empty
 		populate undefined proxy pool
 	else
@@ -80,4 +102,4 @@ else
 		update average request time and push proxy to heap
 	else 
 		remove proxy from consideration
-```
+```![init_proxy](https://user-images.githubusercontent.com/29416921/111506914-1ec31b80-8718-11eb-95c9-2b8961e4b1f5.gif)
