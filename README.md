@@ -6,16 +6,6 @@ The proxy rotator project focues on optimizing the speed at which webpages reque
 
 The application is optimized to handle public ips that are likley to be unreliable. The algorithm assumes a failed request is associated with a dead server and that server will be removed from the set of proxies considered for requests. If the connection is guarenteed to be reliable this functionality can be bypassed by repopulating the undefined queue with that proxy. 
 
-### A set of proxies is initialized (represented by yellow dots)
-![init_proxy](https://user-images.githubusercontent.com/29416921/111508571-d7d62580-8719-11eb-82b4-9ccc1f9f055a.gif)
-### A proxy is sent requests (proxy currently being sent requests is represented in purple, response time of animation matches actual)
-![first_active](https://user-images.githubusercontent.com/29416921/111506956-297db080-8718-11eb-9b29-9c523708faf7.gif)
-### The remaining proxies are sent requests in a round robin 
-#### Proxies that fail to respond are removed (represented by red dots), Valid proxy are added to the heap (represented by blue dots with gray animation)
-![remove](https://user-images.githubusercontent.com/29416921/111506966-2be00a80-8718-11eb-8c10-045f6ab6a0cb.gif)
-### After all proxies have been tested, the fastest is given requests. This rotates if the speed falls below another proxy or a request fails.
-![optimize](https://user-images.githubusercontent.com/29416921/111506974-2edafb00-8718-11eb-8726-7d23fb86a2d4.gif)
-
 ## Usage
 
 |parameter |data type | description |
@@ -28,6 +18,19 @@ proxy_rotator = proxy_manager()
 
 proxy_rotator.get_webpage(url)
 ```
+
+## Visualization
+### A set of proxies is initialized (represented by yellow dots)
+![init_proxy](https://user-images.githubusercontent.com/29416921/111508571-d7d62580-8719-11eb-82b4-9ccc1f9f055a.gif)
+### A proxy is sent requests (proxy currently being sent requests is represented in purple, response time of animation matches actual)
+![first_active](https://user-images.githubusercontent.com/29416921/111506956-297db080-8718-11eb-9b29-9c523708faf7.gif)
+### The remaining proxies are sent requests in a round robin 
+#### Proxies that fail to respond are removed (represented by red dots), Valid proxy are added to the heap (represented by blue dots with gray animation)
+![remove](https://user-images.githubusercontent.com/29416921/111506966-2be00a80-8718-11eb-8c10-045f6ab6a0cb.gif)
+### After all proxies have been tested, the fastest is given requests. This rotates if the speed falls below another proxy or a request fails.
+![optimize](https://user-images.githubusercontent.com/29416921/111506974-2edafb00-8718-11eb-8726-7d23fb86a2d4.gif)
+
+
 
 ## How is the proxy pool populated? 
 
