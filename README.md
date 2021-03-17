@@ -10,11 +10,9 @@ The application is optimized to handle public ips that are likley to be unreliab
 ![init_proxy](https://user-images.githubusercontent.com/29416921/111508571-d7d62580-8719-11eb-82b4-9ccc1f9f055a.gif)
 ### A proxy is sent requests (proxy currently being sent requests is represented in purple, response time of animation matches actual)
 ![first_active](https://user-images.githubusercontent.com/29416921/111506956-297db080-8718-11eb-9b29-9c523708faf7.gif)
-### The remaining proxies are sent requests in a round robin (previous valid proxy added to the heap, blue dot gray animation)
-#### a) Proxies that fail to respond are removed (represented by red dots)
+### The remaining proxies are sent requests in a round robin 
+#### Proxies that fail to respond are removed (represented by red dots), Valid proxy are added to the heap (represented by blue dots with gray animation)
 ![remove](https://user-images.githubusercontent.com/29416921/111506966-2be00a80-8718-11eb-8c10-045f6ab6a0cb.gif)
-#### b) Proxies that are valid get added to the heap (represented by blue dots with gray request animation)
-![test_alive](https://user-images.githubusercontent.com/29416921/111506996-34384580-8718-11eb-9971-4e88e5e0b6aa.gif)
 ### After all proxies have been tested, the fastest is given requests. This rotates if the speed falls below another proxy or a request fails.
 ![optimize](https://user-images.githubusercontent.com/29416921/111506974-2edafb00-8718-11eb-8726-7d23fb86a2d4.gif)
 
