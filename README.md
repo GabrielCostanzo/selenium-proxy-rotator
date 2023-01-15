@@ -2,7 +2,7 @@
 
 ## Description 
 
-The proxy rotator project focues on optimizing the speed at which webpages requested through Selenium are returned through proxy servers. It is achieved through a rotation algorithm that prioritizes speed and will utilize the fastest server until a request fails or the average response speed becomes higher than another server. Before the optimal server is determined each server in the provided pool is given a chance to determine a basline request speed. If one of these two rotation conditions is triggered, requests will be sent to another server that is deemed the fastest.
+The proxy rotator project focuses on optimizing the speed at which webpages requested through Selenium are returned through proxy servers. It is achieved through a rotation algorithm that prioritizes speed and will utilize the fastest server until a request fails or the average response speed becomes higher than another server. Before the optimal server is determined each server in the provided pool is given a chance to determine a basline request speed. If one of these two rotation conditions is triggered, requests will be sent to another server that is deemed the fastest.
 
 The application is optimized to handle public ips that are likley to be unreliable. The algorithm assumes a failed request is associated with a dead server and that server will be removed from the set of proxies considered for requests. If the connection is guarenteed to be reliable this functionality can be bypassed by repopulating the undefined queue with that proxy. 
 
